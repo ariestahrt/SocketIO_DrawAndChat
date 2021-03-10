@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Socket.IO whiteboard</title>
+        <link rel="stylesheet" href="/css/draw.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    </head>
+    <body>
+        <canvas class="whiteboard"></canvas>
+        <div class="colors">
+            <div class="color black"></div>
+            <div class="color red"></div>
+            <div class="color green"></div>
+            <div class="color blue"></div>
+            <div class="color yellow"></div>
+        </div>
+        <div class="chat">
+            <div style="margin:10px;" id="messagesContainer">
+                <!-- <p>test</p> -->
+            </div>
+            <div style="bottom:10px; position:absolute; width:100%;">
+                <form id="messageForm" class="hidden">
+                    <div class="input-group">
+                        <input type="text" class="form-control" autocomplete="off" placeholder="chat..." id="messageInput">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-primary" type="submit">Send</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/js/draw.js" type="module"></script>
+        <script src="/js/chat.js" type="module"></script>
+    </body>
+</html>

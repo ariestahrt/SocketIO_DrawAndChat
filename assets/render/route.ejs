@@ -1,0 +1,19 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Route</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h3>Endpoint : </h3>
+                <ul>
+                    <% for(var ep of endpoint) {%>
+                        <li><a href="/draw/<%=ep%>"><%= ep %></a></li>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
