@@ -5,7 +5,7 @@ var colors = document.getElementsByClassName('color');
 var context = canvas.getContext('2d');
 
 var current = {
-    color: 'black'
+    color: getRandomColor(),
 };
 var drawing = false;
 
@@ -94,6 +94,23 @@ function throttle(callback, delay) {
         }
     };
 }
+
+//random color
+function getRandomColor() {
+    var letters = [
+      "red",
+      "yellow",
+      "green",
+      "blue",
+      "violet",
+      "plum",
+      "chartreuse",
+      "aqua",
+      "cyan",
+    ];
+    var color = letters[Math.floor(Math.random() * 9)];
+    return color;
+  }
 
 function onDrawingEvent(data) {
     var w = canvas.width;
