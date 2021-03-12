@@ -1,19 +1,21 @@
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Route</title>
+
+    <link rel="stylesheet" type="text/css" href="/css/theme.css">
 </head>
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <h3>Endpoint : </h3>
-                <ul>
-                    <% for(var ep of endpoint) {%>
-                        <li><a href="/draw/<%=ep%>"><%= ep %></a></li>
-                    <% } %>
-                </ul>
+    <section id="utama">
+        <h1 class="heading">Socket Draw.IO</h1>
+            <h3 class="heading">Endpoint : </h3>
+            <div class="container">
+                <% for(var ep of endpoint) {%>
+                    <div class="box"><div class="text-overlay"><a href="/draw/<%=ep%>" style="text-decoration:none"><%= ep %></a></div>
+                    <img src="/css/pena.jpg" alt="utama">
+                    </div>
+                <% } %>
             </div>
-        </div>
-    </div>
+    </section>
 </body>
+</html>
