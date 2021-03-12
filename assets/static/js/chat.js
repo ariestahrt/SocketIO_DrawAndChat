@@ -1,5 +1,4 @@
 import socket from './net.js';
-import endpoint from './net.js';
 
 // username is used to be compared with 'from' in 'msg' events
 let username;
@@ -7,26 +6,19 @@ let username;
 window.addEventListener('load', () => {
 
     const $messageInput = document.getElementById('messageInput');
-    const $messageForm = document.getElementById('messageForm')
-    const $messagesContainer = document.getElementById('msg_history')
+    const $messageForm = document.getElementById('messageForm');
+    const $messagesContainer = document.getElementById('msg_history');
+    const $nameInput = document.getElementById('inputName');
 
     // Send Message
     $messageForm.addEventListener('submit', function(event) {
-        event.preventDefault()
+        event.preventDefault();
+        username = $nameInput.value;
         const message = $messageInput.value;
         $messageInput.value = "";
         // Send
         socket.emit('msg', message);
-    })
-
-    // Tanyakan Username:
-    username = prompt("Username");
-    login(username);
-
-    function login(name) {
-        console.log("Login", username);
-        socket.emit('login', username)
-    }
+    });
 
     // Pesan Diterima
     socket.on('msg', (data) => {

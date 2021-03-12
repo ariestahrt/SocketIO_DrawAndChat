@@ -1,6 +1,17 @@
 import socket from './net.js'
+const $loginState = document.getElementById('login_state');
+const $drawState = document.getElementById('draw_state');
 
-var canvas = document.getElementsByClassName('whiteboard')[0];
+const $loginForm = document.getElementById('login_form');
+const $nameInput = document.getElementById('inputName');
+const $roomEndpoint = document.getElementById('roomEndpoint');
+const $wrongPassword = document.getElementById('wrongPassword');
+
+const $drawingCanvas = document.getElementById('drawingCanvas');
+
+// Begin of drawing function
+
+var canvas = $drawingCanvas;
 var colors = document.getElementsByClassName('color');
 var context = canvas.getContext('2d');
 
@@ -13,12 +24,6 @@ canvas.addEventListener('mousedown', onMouseDown, false);
 canvas.addEventListener('mouseup', onMouseUp, false);
 canvas.addEventListener('mouseout', onMouseUp, false);
 canvas.addEventListener('mousemove', throttle(onMouseMove, 10), false);
-
-//Touch support for mobile devices
-canvas.addEventListener('touchstart', onMouseDown, false);
-canvas.addEventListener('touchend', onMouseUp, false);
-canvas.addEventListener('touchcancel', onMouseUp, false);
-canvas.addEventListener('touchmove', throttle(onMouseMove, 10), false);
 
 for (var i = 0; i < colors.length; i++) {
     colors[i].addEventListener('click', onColorUpdate, false);
@@ -44,7 +49,6 @@ function drawLine(x0, y0, x1, y1, color, emit) {
     }
     var w = canvas.width;
     var h = canvas.height;
-    console.log(canvas.height);
 
     socket.emit('drawing', {
         x0: x0 / w,
@@ -113,3 +117,59 @@ function onResize() {
     canvas.width = window.innerWidth * 0.7;
     canvas.height = window.innerHeight;
 }
+
+// End of drawing function
+
+// Begin of LOGIN things
+
+let name;
+let password;
+
+// Send Message
+$loginForm.addEventListener('submit', function(event) {
+    event.preventDefault()
+    name = $nameInput.value;
+    if($roomEndpoint.value == 'AdminOnly'){
+        password = document.getElementById('inputPassword').value;
+        authPassword(password);
+    }else if($roomEndpoint.value == 'ViewOnly'){
+        authViewOnly(name);
+    }else{
+        login(name);
+    }
+});
+
+function authPassword(password){
+    socket.emit('authPassword', password);
+
+    socket.on('authPasswordResponse', (response) => {
+        if(response.errorcode == 0){
+            login(name);
+        }else{
+            $wrongPassword.style.display = 'block';
+        }
+    });
+}
+
+function authViewOnly(authName){
+    socket.emit('authViewOnly', authName);
+
+    socket.on('authViewOnlyResponse', (response) => {
+        if(response.errorcode == 1){
+            canvas.removeEventListener('mousedown', onMouseDown, false);
+            canvas.removeEventListener('mouseup', onMouseUp, false);
+            canvas.removeEventListener('mouseout', onMouseUp, false);
+            canvas.removeEventListener('mousemove', throttle(onMouseMove, 10), false);
+        }
+        login(name);
+    });
+}
+
+function login(name) {
+    console.log("Login", name);
+    socket.emit('login', name);
+    $loginState.style.display = 'none';
+    $drawState.style.display = 'block';
+}
+
+// End of LOGIN things

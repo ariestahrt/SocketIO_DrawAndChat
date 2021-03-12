@@ -16,15 +16,5 @@ window.onunload = () => {
     socket.close()
 }
 
-let view_only = false;
-
-let password = '12345';
-if(endpoint == 'Admin%20Only'){
-    let inputpasswd = prompt("Passwordnya");
-    while(inputpasswd != password){
-        inputpasswd = prompt("Password salah!, input lagi");
-    }
-}
-
 export default socket;
 export {endpoint};

@@ -9,38 +9,79 @@
 		<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet">
+        
+        <!-- Login Form -->
+        <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/floating-labels/">
+        <!-- Bootstrap core CSS -->
+        <link href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Custom styles for this template -->
+        <link href="https://getbootstrap.com/docs/4.0/examples/floating-labels/floating-labels.css" rel="stylesheet">
 	</head>
 	<body>
-		<canvas class="whiteboard"></canvas>
-		<!-- <div class="colors">
-			<div class="color black"></div>
-			<div class="color red"></div>
-			<div class="color green"></div>
-			<div class="color blue"></div>
-			<div class="color yellow"></div>
-			</div> -->
-		<div class="chat">
-			<div class="mesgs">
-				<div class="msg_history" id="msg_history">
-                    <!-- Message goes here-->
-				</div>
-				<div class="type_msg">
-					<div class="input_msg_write">
-                        <form id="messageForm" class="hidden">
-                            <div class="input-group">
-                                <input type="text" style="border-style: solid; border-width: 1px;" class="form-control" autocomplete="off" placeholder="chat..." id="messageInput">
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-primary" type="submit">Send</button>
+        <!-- Login Content -->
+        <div id="login_state" style="display: block;">
+            <form id="login_form" class="form-signin">
+                <div class="text-center mb-4">
+                  <h1 class="h3 mb-3 font-weight-normal">Room <%= endpoint%></h1>
+                  <p>Masukkan nama anda</a></p>
+                </div>
+                
+                <input style="display: none;" type="text" id="roomEndpoint" value="<%=endpoint%>">
+
+                <div class="form-label-group">
+                  <input type="text" id="inputName" class="form-control" placeholder="Nama anda" required autofocus>
+                  <label for="inputName">Nama</label>
+                </div>
+
+                <% if(endpoint == 'AdminOnly'){ %>
+                    <div class="form-label-group">
+                    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                    <label for="inputPassword">Password</label>
+                    </div>
+                <% } %>
+          
+                <div class="checkbox mb-3" id="wrongPassword" style="text-align: center; display: none;">
+                  <p style="color: red;">Password Salah!</p>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Let me in</button>
+                <p class="mt-5 mb-3 text-muted text-center">Ini footernya</p>
+            </form>
+        </div>
+
+        <!-- Main Content -->
+        <div id="draw_state" style="display: none;">
+            <canvas id="drawingCanvas" class="whiteboard"></canvas>
+            <!-- <div class="colors">
+                <div class="color black"></div>
+                <div class="color red"></div>
+                <div class="color green"></div>
+                <div class="color blue"></div>
+                <div class="color yellow"></div>
+            </div> -->
+            <div class="chat">
+                <div class="mesgs">
+                    <div class="msg_history" id="msg_history">
+                        <!-- Message goes here-->
+                    </div>
+                    <div class="type_msg">
+                        <div class="input_msg_write">
+                            <form id="messageForm" class="hidden">
+                                <div class="input-group">
+                                    <input type="text" style="border-style: solid; border-width: 1px;" class="form-control" autocomplete="off" placeholder="chat..." id="messageInput">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-primary" type="submit">Send</button>
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
-					</div>
-				</div>
-			</div>
-		</div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 		<script src="/socket.io/socket.io.js"></script>
 		<script src="/js/draw.js" type="module"></script>
 		<script src="/js/chat.js" type="module"></script>
+		<!-- <script src="/js/login.js" type="module"></script> -->
 	</body>
 </html>

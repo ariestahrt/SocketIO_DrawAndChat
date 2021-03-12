@@ -12,6 +12,7 @@ app.set('port', port);
 server.listen(port, () => console.log('listening on port http://127.0.0.1:' + port));
 
 const password = '12345';
+const roomMaster = ['Ariesta', 'Ricky'];
 
 // Setup view engine
 
@@ -24,7 +25,7 @@ app.set('views', path.join(__dirname, '/assets/render'));
 // Set Default Static Assets
 app.use(express.static(path.join(__dirname, '/assets/static')));
 
-const endpoint = ['Bebas', 'Admin Only', 'View Only'];
+const endpoint = ['Bebas', 'AdminOnly', 'ViewOnly'];
 
 endpoint.map(ep => io.of(`/${ep}`)).forEach(ep => {
 
@@ -35,6 +36,38 @@ endpoint.map(ep => io.of(`/${ep}`)).forEach(ep => {
         
         console.log('new connection: ' + socket.id);
 
+        // Auth Password
+        socket.on('authPassword', (pwd) => {
+            console.log('auth password : ', pwd);
+
+            // Tell sender
+            if(pwd == password){
+                socket.emit('authPasswordResponse', {
+                    errorcode: 0
+                });    
+            }else{
+                socket.emit('authPasswordResponse', {
+                    errorcode: 1
+                });
+            }
+        });
+
+        // Auth View Only
+        socket.on('authViewOnly', (authName) => {
+            console.log('auth viewonly with name : ', authName);
+
+            // Tell sender
+            if(roomMaster.includes(authName)){
+                socket.emit('authViewOnlyResponse', {
+                    errorcode: 0
+                });    
+            }else{
+                socket.emit('authViewOnlyResponse', {
+                    errorcode: 1
+                });
+            }
+        });
+
         // User masuk
         socket.on('login', (name) => {
             console.log('login', name);
@@ -44,7 +77,7 @@ endpoint.map(ep => io.of(`/${ep}`)).forEach(ep => {
             // Tell everyone
             console.log('Sending to all');
             socket.broadcast.emit('msg', {
-                from: 'server',
+                from: 'Server',
                 message: `${name} logged in.`
             });
         });
@@ -81,7 +114,7 @@ endpoint.map(ep => io.of(`/${ep}`)).forEach(ep => {
 
             // Tell everyone
             socket.broadcast.emit('msg', {
-                from: 'server',
+                from: 'Server',
                 message: `${name} disconnected.`
             });
 
@@ -93,17 +126,6 @@ endpoint.map(ep => io.of(`/${ep}`)).forEach(ep => {
         socket.on('drawing', (data) => socket.broadcast.emit('drawing', data));
     });
 });
-
-// Fungsi validasi
-
-function validation(room, params){
-    if(room == 'Admin Only'){
-        if(params.password == '12345'){
-            return true;
-        }
-        return false;
-    }
-}
 
 // Routes
 
@@ -125,5 +147,5 @@ app.get('/draw/:endpoint', (req,res) => {
         return res.sendStatus(404);
     }
 
-    res.render('draw');
+    res.render('draw', {endpoint: ep});
 });
