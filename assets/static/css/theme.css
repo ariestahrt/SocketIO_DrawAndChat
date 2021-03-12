@@ -1,0 +1,81 @@
+/* tampilan */
+@charset "utf-8";
+
+body{
+    margin:0px;
+    padding: 0px;
+    background-color: #60a3f0;
+}
+
+#utama{
+    width: 100%;
+    box-sizing: border-box;
+    font-family: calibri;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 2% 20px 2%;
+}
+.heading{
+    font-family: calbiri;
+    font-size: 1.7rem;
+    text-align: center;
+    color: #FFFFFF;
+    font-weight: 400;
+    padding: 10px 20px;
+    background-color: #292929;
+    letter-spacing: 2px;
+    border-radius: 3px;
+    box-shadow: 2px 2px 20px rgba(0,0,0,0.1);
+}
+.box{
+    background-color: #1f1f1f;
+    overflow: hidden;
+    border-radius: 3px;
+    box-shadow: 2px 2px 13px rgba(0,0,0,0.3);
+    position: relative;
+    margin: 10px;
+}
+
+.text-overlay{
+    font-family: calibri;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgba(108, 95, 228, 0.89);
+    display: none;
+}
+.text-overlay a{
+    color: #FFFFFF;
+}
+.text-overlay a{
+    font-size: 2.2rem;
+    margin: 0px;
+    padding: 0px;
+    letter-spacing: 2px;
+}
+
+.box:hover .text-overlay{
+    display: flex;
+}
+.box img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.container{
+    width: 90%;
+    height: 70vh;
+    display: grid;
+    grid-template-rows: auto auto;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 10px;
+}
