@@ -9,7 +9,7 @@ const { Socket } = require('socket.io');
 
 const port = process.env.PORT || 1337;
 app.set('port', port);
-server.listen(port, () => console.log('listening on port ' + port));
+server.listen(port, () => console.log('listening on port http://127.0.0.1:' + port));
 
 const password = '12345';
 

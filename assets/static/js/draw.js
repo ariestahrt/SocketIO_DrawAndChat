@@ -97,20 +97,10 @@ function throttle(callback, delay) {
 
 //random color
 function getRandomColor() {
-    var letters = [
-      "red",
-      "yellow",
-      "green",
-      "blue",
-      "violet",
-      "plum",
-      "chartreuse",
-      "aqua",
-      "cyan",
-    ];
-    var color = letters[Math.floor(Math.random() * 9)];
-    return color;
-  }
+    var randomColor = Math.floor(Math.random()*16777215).toString(16);
+    return '#'+randomColor;
+
+}
 
 function onDrawingEvent(data) {
     var w = canvas.width;

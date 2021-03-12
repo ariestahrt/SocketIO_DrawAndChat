@@ -21,7 +21,7 @@
     height: 100%;
     width: 70vw;
     position: absolute;
-    background-color: antiquewhite;
+    background-color: aliceblue;
     left: 0;
     right: 0;
     bottom: 0;
@@ -30,6 +30,7 @@
   
   .chat {
     height: 100%;
+    /* background-color: ; */
     width: 30vw;
     position: absolute;
     right: 0;
